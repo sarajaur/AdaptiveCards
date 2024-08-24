@@ -4,5 +4,6 @@
         <file>qmlFiles/CardViewer.qml</file>
         <file>qmlFiles/main.qml</file>
         <file>qmlFiles/SampleCardListView.qml</file>
+        <file>ImageRender.qml</file>
     </qresource>
 </RCC>

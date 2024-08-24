@@ -16,6 +16,7 @@ namespace AdaptiveCardQmlEngine
         static const std::string handleEscapeSequences(std::string& text);
         static const std::string formatHtmlUrl(std::string& text, const std::string& linkColor, const std::string& textDecoration);
         static std::vector<std::string> splitString(const std::string& string, char delimiter);
+        static int hexStrToInt(const std::string& str);
         
 		
     private:

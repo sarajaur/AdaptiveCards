@@ -85,7 +85,16 @@ namespace AdaptiveCardQmlEngine
         }
         return splitElements;
     }
-
+    int Utils::hexStrToInt(const std::string& str)
+    {
+        std::string::size_type sz;
+        const int i = std::stoi(str, &sz, 16);
+        if (sz != str.size())
+        {
+            throw std::invalid_argument("Number is not a valid hexadecimal");
+        }
+        return i;
+    }
     //-------------------------------------------------------------------------------------------------------
 
     /*

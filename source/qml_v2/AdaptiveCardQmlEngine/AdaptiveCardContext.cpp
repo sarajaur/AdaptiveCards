@@ -47,6 +47,36 @@ namespace AdaptiveCardQmlEngine
         return mCardConfig;
     }
 
+    std::string AdaptiveCardContext::getRGBColor(const std::string& color, bool isQml)
+    {
+        if (color.length() > 1 && color[0] == '#')
+        {
+            if (color.length() == 7)
+            {
+                return isQml ? Formatter() << "'" << color << "'" : color;
+            }
+            if (color.length() == 9)
+            {
+                try
+                {
+                    const float opacity = static_cast<float>(Utils::hexStrToInt(color.substr(1, 2))) / 255;
+                    const int r = Utils::hexStrToInt(color.substr(3, 2));
+                    const int g = Utils::hexStrToInt(color.substr(5, 2));
+                    const int b = Utils::hexStrToInt(color.substr(7, 2));
+                    return isQml ? Formatter() << "Qt.rgba(" << r << ", " << g << ", " << b << ", " << std::fixed
+                                               << std::setprecision(2) << opacity << ")"
+                                 : Formatter() << "rgba(" << r << ", " << g << ", " << b << ", " << std::fixed
+                                               << std::setprecision(2) << opacity << ")";
+                }
+                catch (const std::exception&)
+                {
+                    return isQml ? Formatter() << "'" << color << "'" : color;
+                }
+            }
+        }
+        return isQml ? Formatter() << "'" << color << "'" : color;
+    }
+
     QString AdaptiveCardContext::getColor(AdaptiveCards::ForegroundColor color, bool isSubtle, bool highlight, bool isQml)
     {
         AdaptiveCards::ColorConfig colorConfig; 
@@ -89,5 +119,34 @@ namespace AdaptiveCardQmlEngine
             return QString::fromStdString(color);
         }
 	}
-} // namespace AdaptiveCardQmlEngine
+
+     const int AdaptiveCardQmlEngine::AdaptiveCardContext::getContentIndex()
+    {
+        return m_ContentIndex;
+    }
+
+    void AdaptiveCardQmlEngine::AdaptiveCardContext::setContentIndex(int contentIndex)
+    {
+        m_ContentIndex = contentIndex;
+    }
+
+    void AdaptiveCardQmlEngine::AdaptiveCardContext::incrementContentIndex()
+    {
+        m_ContentIndex++;
+    }
+    void AdaptiveCardContext::addHeightEstimate(const int height)
+    {
+        m_HeightEstimate += height;
+    }
+
+    void AdaptiveCardContext::setHeightEstimate(const int height)
+    {
+        m_HeightEstimate = height;
+    }
+
+    const int AdaptiveCardContext::getHeightEstimate()
+    {
+        return m_HeightEstimate;
+    }
+    } // namespace AdaptiveCardQmlEngine
 

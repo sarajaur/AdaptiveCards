@@ -12,6 +12,7 @@
 #include "Formatter.h"
 #include "utils/Utils.h"
 #include "utils/AdaptiveCardEnums.h"
+#include <iomanip>
 
 namespace AdaptiveCardQmlEngine
 {
@@ -36,9 +37,16 @@ namespace AdaptiveCardQmlEngine
 
         std::shared_ptr<AdaptiveCards::HostConfig> getHostConfig();
         std::shared_ptr<AdaptiveCardConfig> getCardConfig();
+        std::string getRGBColor(const std::string& color, bool isQml = 1);
 
         QString getColor(AdaptiveCards::ForegroundColor color, bool isSubtle, bool highlight, bool isQml = true);
+        const int getContentIndex();
+        void setContentIndex(int contentCounter);
+        void incrementContentIndex();
 
+        void addHeightEstimate(const int height);
+        void setHeightEstimate(const int height);
+        const int getHeightEstimate();
     private:
         AdaptiveCardContext();
         ~AdaptiveCardContext();
@@ -51,5 +59,8 @@ namespace AdaptiveCardQmlEngine
         std::shared_ptr<AdaptiveCards::HostConfig> mHostConfig;
         std::shared_ptr<AdaptiveCardConfig> mCardConfig;
         AdaptiveCardEnums::AdaptiveCardTheme mAdaptiveCardTheme;
+
+        int m_ContentIndex{0};
+        int m_HeightEstimate{0};
     };
 }
